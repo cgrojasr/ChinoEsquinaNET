@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChinoEsquina.UPC.DA\ChinoEsquina.UPC.DA.csproj" />
+    <ProjectReference Include="..\ChinoEsquina.UPC.EF\ChinoEsquina.UPC.EF.csproj" />
+  </ItemGroup>
+
 </Project>
