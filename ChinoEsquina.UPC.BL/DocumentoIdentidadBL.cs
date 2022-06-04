@@ -12,7 +12,7 @@ namespace ChinoEsquina.UPC.BL
             objDocumentoIdentidadDA = new DocumentoIdentidadDA();
         }
 
-        public List<DocumentoIdentidad> FindAll() {
+        public IEnumerable<DocumentoIdentidad> FindAll() {
             return objDocumentoIdentidadDA.FindAll();
         }
     }

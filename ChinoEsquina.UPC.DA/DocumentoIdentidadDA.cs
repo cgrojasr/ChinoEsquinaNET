@@ -11,7 +11,7 @@ namespace ChinoEsquina.UPC.DA
             dc = new dbChinoEsquinaContext();
         }
 
-        public List<DocumentoIdentidad> FindAll() { 
+        public IEnumerable<DocumentoIdentidad> FindAll() { 
             return dc.DocumentoIdentidads.ToList();
         }
     }
