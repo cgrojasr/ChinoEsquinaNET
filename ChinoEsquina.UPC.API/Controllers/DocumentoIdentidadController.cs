@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ChinoEsquina.UPC.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/documentoidentidad")]
     [ApiController]
     public class DocumentoIdentidadController : ControllerBase
     {
@@ -22,8 +22,14 @@ namespace ChinoEsquina.UPC.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult FindAll() {
-            return Ok(_mapper.Map<IEnumerable<DocumentoIdentidadModel>>(objDocumentoIdentidadBL.FindAll()));
+        public IActionResult ListarTodo() {
+            return Ok(_mapper.Map<IEnumerable<DocumentoIdentidadModel>>(objDocumentoIdentidadBL.ListarTodo()));
+        }
+
+        [HttpGet("activo")]
+        public IActionResult ListarActivo()
+        {
+            return Ok(_mapper.Map<IEnumerable<DocumentoIdentidadModel>>(objDocumentoIdentidadBL.ListarActivo()));
         }
     }
 }

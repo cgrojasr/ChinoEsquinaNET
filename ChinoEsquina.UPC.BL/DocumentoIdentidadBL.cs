@@ -1,4 +1,5 @@
-﻿using ChinoEsquina.UPC.DA;
+﻿using ChinoEsquina.UPC.BE;
+using ChinoEsquina.UPC.DA;
 using ChinoEsquina.UPC.EF;
 
 namespace ChinoEsquina.UPC.BL
@@ -12,8 +13,28 @@ namespace ChinoEsquina.UPC.BL
             objDocumentoIdentidadDA = new DocumentoIdentidadDA();
         }
 
-        public IEnumerable<DocumentoIdentidad> FindAll() {
-            return objDocumentoIdentidadDA.FindAll();
+        public IEnumerable<DocumentoIdentidad> ListarTodo() {
+            return objDocumentoIdentidadDA.ListarTodo();
+        }
+
+        public IEnumerable<DocumentoIdentidad> ListarActivo()
+        {
+            return objDocumentoIdentidadDA.ListarActivo();
+        }
+
+        public DocumentoIdentidad BuscarPorId(int IdDocumentoIdentidad)
+        {
+            return objDocumentoIdentidadDA.BuscarPorId(IdDocumentoIdentidad);
+        }
+
+        public DocumentoIdentidad Registrar(DocumentoIdentidad objDocumentoIdentidad)
+        {
+            return objDocumentoIdentidadDA.Registrar(objDocumentoIdentidad);
+        }
+
+        public DocumentoIdentidad Modificar(DocumentoIdentidad documentoIdentidad)
+        {
+            return objDocumentoIdentidadDA.Modificar(documentoIdentidad);
         }
     }
 }
