@@ -13,17 +13,20 @@ namespace ChinoEsquina.UPC.API.Controllers
     public class DocumentoIdentidadController : ControllerBase
     {
         private readonly DocumentoIdentidadBL objDocumentoIdentidadBL;
+        private readonly DocumentoIdentidadBLDP objDocumentoIdentidadBLDP;
         private readonly IMapper _mapper;
 
-        public DocumentoIdentidadController(IMapper mapper)
+        public DocumentoIdentidadController(IMapper mapper, IConfiguration _configuration)
         {
             objDocumentoIdentidadBL = new DocumentoIdentidadBL();
+            objDocumentoIdentidadBLDP = new DocumentoIdentidadBLDP(_configuration);
             _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult ListarTodo() {
-            return Ok(_mapper.Map<IEnumerable<DocumentoIdentidadModel>>(objDocumentoIdentidadBL.ListarTodo()));
+            return Ok(objDocumentoIdentidadBLDP.ListarTodo());
+            //return Ok(_mapper.Map<IEnumerable<DocumentoIdentidadModel>>(objDocumentoIdentidadBL.ListarTodo()));
         }
 
         [HttpGet("activo")]
