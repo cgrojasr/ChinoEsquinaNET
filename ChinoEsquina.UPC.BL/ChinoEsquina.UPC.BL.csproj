@@ -9,9 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ChinoEsquina.UPC.BE\ChinoEsquina.UPC.BE.csproj" />
     <ProjectReference Include="..\ChinoEsquina.UPC.DA\ChinoEsquina.UPC.DA.csproj" />
-    <ProjectReference Include="..\ChinoEsquina.UPC.DP\ChinoEsquina.UPC.DP.csproj" />
-    <ProjectReference Include="..\ChinoEsquina.UPC.EF\ChinoEsquina.UPC.EF.csproj" />
-    <ProjectReference Include="..\ChinoEsquina.UPC.Entity\ChinoEsquina.UPC.Entity.csproj" />
   </ItemGroup>
 
 </Project>

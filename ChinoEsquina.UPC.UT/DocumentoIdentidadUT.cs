@@ -8,7 +8,7 @@ namespace ChinoEsquina.UPC.UT
         private readonly DocumentoIdentidadBL objDocumentoIdentidadBL;
         public DocumentoIdentidadUT()
         {
-            objDocumentoIdentidadBL = new DocumentoIdentidadBL();
+            objDocumentoIdentidadBL = new DocumentoIdentidadBL(null);
         }
 
         [TestMethod]

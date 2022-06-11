@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChinoEsquina.UPC.BL\ChinoEsquina.UPC.BL.csproj" />
-    <ProjectReference Include="..\ChinoEsquina.UPC.EF\ChinoEsquina.UPC.EF.csproj" />
   </ItemGroup>
 
 </Project>

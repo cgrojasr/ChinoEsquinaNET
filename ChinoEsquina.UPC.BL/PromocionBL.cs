@@ -1,5 +1,6 @@
-﻿using ChinoEsquina.UPC.DA;
-using ChinoEsquina.UPC.EF;
+﻿using ChinoEsquina.UPC.BE;
+using ChinoEsquina.UPC.DA;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,14 @@ namespace ChinoEsquina.UPC.BL
     {
         private readonly PromocionDA objPromocionDA;
 
-        public PromocionBL()
+        public PromocionBL(IConfiguration configuration)
         {
-            objPromocionDA = new PromocionDA();
+            objPromocionDA = new PromocionDA(configuration);
         }
 
-        public Promocion Buscar(int IdPromocion)
+        public Promocion BuscarPorId(int idPromocion)
         {
-            return objPromocionDA.Buscar(IdPromocion);
+            return objPromocionDA.BuscarPorId(idPromocion);
         }
 
         public Promocion Registrar(Promocion objPromocion)
@@ -27,9 +28,9 @@ namespace ChinoEsquina.UPC.BL
             return objPromocionDA.Registrar(objPromocion);
         }
 
-        public Promocion Modifcar(Promocion objPromocion)
+        public bool Actualizar(Promocion objPromocion)
         {
-            return objPromocionDA.Modifcar(objPromocion);
+            return objPromocionDA.Actualizar(objPromocion);
         }
 
         public bool Eliminar(int IdPromocion)

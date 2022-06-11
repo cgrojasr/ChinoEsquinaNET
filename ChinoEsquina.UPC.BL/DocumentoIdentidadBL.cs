@@ -1,6 +1,6 @@
 ﻿using ChinoEsquina.UPC.BE;
 using ChinoEsquina.UPC.DA;
-using ChinoEsquina.UPC.EF;
+using Microsoft.Extensions.Configuration;
 
 namespace ChinoEsquina.UPC.BL
 {
@@ -8,9 +8,9 @@ namespace ChinoEsquina.UPC.BL
     {
         private readonly DocumentoIdentidadDA objDocumentoIdentidadDA;
 
-        public DocumentoIdentidadBL()
+        public DocumentoIdentidadBL(IConfiguration configuration)
         {
-            objDocumentoIdentidadDA = new DocumentoIdentidadDA();
+            objDocumentoIdentidadDA = new DocumentoIdentidadDA(configuration);
         }
 
         public IEnumerable<DocumentoIdentidad> ListarTodo() {
@@ -32,9 +32,9 @@ namespace ChinoEsquina.UPC.BL
             return objDocumentoIdentidadDA.Registrar(objDocumentoIdentidad);
         }
 
-        public DocumentoIdentidad Modificar(DocumentoIdentidad documentoIdentidad)
+        public bool Actualizar(DocumentoIdentidad documentoIdentidad)
         {
-            return objDocumentoIdentidadDA.Modificar(documentoIdentidad);
+            return objDocumentoIdentidadDA.Actualizar(documentoIdentidad);
         }
     }
 }

@@ -1,47 +1,49 @@
-﻿using ChinoEsquina.UPC.EF;
+﻿using ChinoEsquina.UPC.BE;
+using ChinoEsquina.UPC.DA.Interfaces;
+using Dapper;
+using Microsoft.Extensions.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace ChinoEsquina.UPC.DA
 {
-    public class DocumentoIdentidadDA
+    public class DocumentoIdentidadDA : IDocumentoIdentidadDA
     {
-        private readonly dbChinoEsquinaContext dc;
+        private readonly IDbConnection db;
 
-        public DocumentoIdentidadDA()
+        public DocumentoIdentidadDA(IConfiguration configuration)
         {
-            dc = new dbChinoEsquinaContext();
+            db = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
         }
 
-        public IEnumerable<DocumentoIdentidad> ListarTodo() { 
-            return dc.DocumentoIdentidads;
+        public bool Actualizar(DocumentoIdentidad obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DocumentoIdentidad BuscarPorId(int id)
+        {
+            return db.QuerySingle<DocumentoIdentidad>($"SELECT * FROM documento_identidad WHERE id_documento_identidad = {id}");
+        }
+
+        public IEnumerable<DocumentoIdentidad> ListarTodo()
+        {
+            return db.Query<DocumentoIdentidad>("SELECT * FROM documento_identidad");
+        }
+
+        public bool Eliminar(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<DocumentoIdentidad> ListarActivo()
         {
-            return dc.DocumentoIdentidads.Where(x=>x.Activo.Equals(true));
+            throw new NotImplementedException();
         }
 
-        public DocumentoIdentidad BuscarPorId(int IdDocumentoIdentidad)
+        public DocumentoIdentidad Registrar(DocumentoIdentidad obj)
         {
-            return dc.DocumentoIdentidads.Where(x => x.IdDocumentoIdentidad.Equals(IdDocumentoIdentidad)).Single();
-        }
-
-        public DocumentoIdentidad Registrar(DocumentoIdentidad objDocumentoIdentidad)
-        {
-            objDocumentoIdentidad.FechaRegistro = DateTime.Now;
-            dc.Add(objDocumentoIdentidad);
-            dc.SaveChanges();
-            return objDocumentoIdentidad;
-        }
-
-        public DocumentoIdentidad Modificar(DocumentoIdentidad documentoIdentidad)
-        {
-            var objDocumentoIdentidad = dc.DocumentoIdentidads.Where(x => x.IdDocumentoIdentidad.Equals(documentoIdentidad.IdDocumentoIdentidad)).Single();
-            objDocumentoIdentidad.Nombre = documentoIdentidad.Nombre;
-            objDocumentoIdentidad.Abreviatura = documentoIdentidad.Abreviatura;
-            objDocumentoIdentidad.FechaModifico = DateTime.Now;
-            objDocumentoIdentidad.IdUsuarioModifico = documentoIdentidad.IdUsuarioModifico;
-            dc.SaveChanges();
-            return objDocumentoIdentidad;
+            throw new NotImplementedException();
         }
     }
 }

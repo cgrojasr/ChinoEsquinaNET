@@ -1,59 +1,64 @@
-﻿using ChinoEsquina.UPC.EF;
+﻿using ChinoEsquina.UPC.BE;
+using ChinoEsquina.UPC.DA.Interfaces;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ChinoEsquina.UPC.DA
 {
-    public class PromocionDA
+    public class PromocionDA : IPromocionDA
     {
-        private readonly dbChinoEsquinaContext dc;
+        private readonly IDbConnection db;
 
-        public PromocionDA()
+        public PromocionDA(IConfiguration configuration)
         {
-            dc = new dbChinoEsquinaContext();
+            db = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
         }
 
-        public Promocion Buscar(int IdPromocion)
+        public bool Actualizar(Promocion obj)
         {
-            return dc.Promocions.Where(x => x.IdPromocion.Equals(IdPromocion)).Single();
+            var query = @"UPDATE promocion SET nombre = @nombre, descripcion = @descripcion, " +
+                "fecha_inicio = @fecha_inicio, fecha_final = @fecha_final, activo = @activo, " +
+                "id_usuario_modifico = @id_usuario_modifico, fecha_modifico = GETDATE(), eliminado = @eliminado " +
+                "WHERE id_promocion = @id_promocion";
+            db.Execute(query, obj);
+
+            return true;
         }
 
-        public Promocion Registrar(Promocion objPromocion)
+        public Promocion BuscarPorId(int id)
         {
-            objPromocion.FechaRegistro = DateTime.Now;
-            dc.Promocions.Add(objPromocion);
-            dc.SaveChanges();
-            return objPromocion;
+            var query = @"SELECT * FROM promocion WHERE id_promocion = @id_promocion";
+            return db.QuerySingle<Promocion>(query, new { id_promocion = id });
         }
 
-        public Promocion Modifcar(Promocion objPromocion)
+        public bool Eliminar(int id)
         {
-            var promocion = dc.Promocions.Where(x => x.IdPromocion.Equals(objPromocion.IdPromocion)).Single();
-            promocion.Nombre = objPromocion.Nombre;
-            promocion.Descripcion = objPromocion.Descripcion;
-            promocion.FechaInicio = objPromocion.FechaInicio;
-            promocion.FechaFinal = objPromocion.FechaFinal;
-            promocion.Activo = objPromocion.Activo;
-            promocion.IdUsuarioModifico = objPromocion.IdUsuarioModifico;
-            promocion.FechaModifico = DateTime.Now;
-            dc.SaveChanges();
-            return promocion;
-        }
-
-        public bool Eliminar(int IdPromocion)
-        {
-            dc.Promocions.Remove(dc.Promocions.Where(x => x.IdPromocion.Equals(IdPromocion)).Single());
-            dc.SaveChanges();
-
+            var query = @"DELETE FROM promocion WHERE id_promocion = @id_promocion";
+            db.Execute(query, new { id_promocion = id });
             return true;
         }
 
         public IEnumerable<Promocion> ListarTodo()
         {
-            return dc.Promocions;
+            var query = "SELECT * FROM promocion";
+            return db.Query<Promocion>(query);
+        }
+
+        public Promocion Registrar(Promocion obj)
+        {
+            obj.fecha_registro = DateTime.Now;
+            var query = @"INSERT promocion VALUES (@nombre, @descripcion, @fecha_inicio, @fecha_final," +
+                "@activo, @id_usuario_registro, @fecha_registro, NULL, NULL, @eliminado); " + 
+                "SELECT CAST(SCOPE_IDENTITY() AS int)";
+            obj.id_promocion = db.ExecuteScalar<int>(query, obj);
+            return obj;
         }
     }
 }
