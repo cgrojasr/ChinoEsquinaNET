@@ -1,4 +1,5 @@
-﻿using ChinoEsquina.UPC.BE;
+﻿using ChinoEsquina.UPC.API.Models;
+using ChinoEsquina.UPC.BE;
 using ChinoEsquina.UPC.BL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,16 @@ namespace ChinoEsquina.UPC.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult ListarTodo()
+        public IActionResult Listar([FromQuery] PromocionQueryRequest promocionQueryRequest)
         {
             try
             {
-                return Ok(objPromocionBL.ListarTodo());
+                var result = objPromocionBL.Listar(promocionQueryRequest.nombre, promocionQueryRequest.descripcion);
+                if(result == null)
+                    return NotFound();
+                return Ok(result);
             }
-            catch (Exception)
+            catch (Exception)   
             {
                 return BadRequest();
             }

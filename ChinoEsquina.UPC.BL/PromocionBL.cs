@@ -38,9 +38,14 @@ namespace ChinoEsquina.UPC.BL
             return objPromocionDA.Eliminar(IdPromocion);
         }
 
-        public IEnumerable<Promocion> ListarTodo()
+        public IEnumerable<Promocion> Listar(string nombre, string descripcion)
         {
-            return objPromocionDA.ListarTodo();
+            if(!string.IsNullOrWhiteSpace(nombre))
+                return objPromocionDA.ListarPorNombre(nombre);
+            else if(!string.IsNullOrWhiteSpace(descripcion))
+                return objPromocionDA.ListarPorDescripcion(descripcion);
+            else
+                return objPromocionDA.ListarTodo();
         }
     }
 }

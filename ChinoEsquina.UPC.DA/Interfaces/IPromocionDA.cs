@@ -9,5 +9,7 @@ namespace ChinoEsquina.UPC.DA.Interfaces
 {
     public interface IPromocionDA : ICRUD<Promocion>
     {
+        IEnumerable<Promocion> ListarPorNombre(String nombre);
+        IEnumerable<Promocion> ListarPorDescripcion(String descripcion);
     }
 }

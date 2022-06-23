@@ -45,6 +45,18 @@ namespace ChinoEsquina.UPC.DA
             return true;
         }
 
+        public IEnumerable<Promocion> ListarPorNombre(string nombre)
+        {
+            var query = @"SELECT * FROM promocion WHERE nombre LIKE @name";            
+            return db.Query<Promocion>(query, new { name = "%" + nombre + "%" });
+        }
+
+        public IEnumerable<Promocion> ListarPorDescripcion(string descripcion)
+        {
+            var query = @"SELECT * FROM promocion WHERE descripcion LIKE @description";
+            return db.Query<Promocion>(query, new { description = "%" + descripcion + "%" });
+        }
+
         public IEnumerable<Promocion> ListarTodo()
         {
             var query = "SELECT * FROM promocion";
